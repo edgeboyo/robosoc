@@ -24,7 +24,7 @@ min_value = 1000
 
 def distance(pin):
     GPIO.output(sonic_sensors[pin][0], True)
-    time.sleep(0.00001)
+    time.sleep(0.00001)# was 0.00001 now it's 100Hz to save cpu usage.
     GPIO.output(sonic_sensors[pin][0], False)
     StartTime = time.time()
     StopTime = time.time()
@@ -52,27 +52,28 @@ if __name__ == "__main__":
         time.sleep(1)
         pi.set_servo_pulsewidth(ESC1, 1500)
         pi.set_servo_pulsewidth(ESC2, 1500)
+        print("Calibration complete time to run!")
         while True:
             distf = distance("front")
             distr = distance("right")
             distl = distance("left")
             print(distl, distf, distr)
-            if distf <= 100:
+            if distf <= 150:
                 pi.set_servo_pulsewidth(ESC1, 2000)
                 pi.set_servo_pulsewidth(ESC2, 2000)
-            elif (distf >= 100) & (distl <= 100):
+            elif (distf >= 150) & (distl <= 150):
                 pi.set_servo_pulsewidth(ESC1, 1400)
                 pi.set_servo_pulsewidth(ESC2, 1600)
-                time.sleep(1)
-            elif (distf >= 100) & (distr <= 100):
+                time.sleep(0.1)
+            elif (distf >= 150) & (distr <= 150):
                 pi.set_servo_pulsewidth(ESC1, 1600)
                 pi.set_servo_pulsewidth(ESC2, 1400)
-                time.sleep(1)
+                time.sleep(0.1)
             else:
-                pi.set_servo_pulsewidth(ESC1, 1600)
-                pi.set_servo_pulsewidth(ESC2, 1400)
-                time.sleep(2)
-            time.sleep(0.5)
+                pi.set_servo_pulsewidth(ESC1, 1400)
+                pi.set_servo_pulsewidth(ESC2, 1600)
+                time.sleep(0.1)
+            time.sleep(0.001)
     except KeyboardInterrupt:
         GPIO.cleanup()
         os.system("sudo killall pigpiod")
