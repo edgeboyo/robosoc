@@ -19,6 +19,11 @@ for pin_tuple in sonic_sensors.values():
     GPIO.setup(pin_tuple[0], GPIO.OUT)
     GPIO.setup(pin_tuple[1], GPIO.IN)
 
+print("Sonic sensors set up!")
+
+import fan
+
+from fan import runFan
 max_value = 2000
 min_value = 1000
 
@@ -52,26 +57,29 @@ if __name__ == "__main__":
         time.sleep(1)
         pi.set_servo_pulsewidth(ESC1, 1500)
         pi.set_servo_pulsewidth(ESC2, 1500)
-        print("Calibration complete time to run!")
+        print("Motors armed")
+        runFan()
+        print("Calibration  complete time to run!")
+        input("Enter key to start battle...")
         while True:
             distf = distance("front")
             distr = distance("right")
             distl = distance("left")
             print(distl, distf, distr)
             if distf <= 150:
-                pi.set_servo_pulsewidth(ESC1, 2000)
-                pi.set_servo_pulsewidth(ESC2, 2000)
-            elif (distf >= 150) & (distl <= 150):
-                pi.set_servo_pulsewidth(ESC1, 1400)
+                pi.set_servo_pulsewidth(ESC1, 1600)
                 pi.set_servo_pulsewidth(ESC2, 1600)
+            elif (distf >= 150) & (distl <= 150):
+                pi.set_servo_pulsewidth(ESC1, 1450)
+                pi.set_servo_pulsewidth(ESC2, 1550)
                 time.sleep(0.1)
             elif (distf >= 150) & (distr <= 150):
-                pi.set_servo_pulsewidth(ESC1, 1600)
-                pi.set_servo_pulsewidth(ESC2, 1400)
+                pi.set_servo_pulsewidth(ESC1, 1550)
+                pi.set_servo_pulsewidth(ESC2, 1450)
                 time.sleep(0.1)
             else:
-                pi.set_servo_pulsewidth(ESC1, 1400)
-                pi.set_servo_pulsewidth(ESC2, 1600)
+                pi.set_servo_pulsewidth(ESC1, 1450)
+                pi.set_servo_pulsewidth(ESC2, 1550)
                 time.sleep(0.1)
             time.sleep(0.001)
     except KeyboardInterrupt:
