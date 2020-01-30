@@ -1,6 +1,6 @@
 import os, time
 
-os.system("sudo pigiod")
+os.system("sudo pigpiod")
 time.sleep(1)
 import pigpio
 
@@ -10,6 +10,10 @@ pi = pigpio.pi()
 pi.set_servo_pulsewidth(FAN1, 1000)
 time.sleep(5)
 pi.set_servo_pulsewidth(FAN1, 1200)
+time.sleep(2)
+pi.set_servo_pulsewidth(FAN1, 1400)
+#time.sleep(2)
+#pi.set_servo_pulsewidth(FAN1, 1650)
 
 try:
     while True:
