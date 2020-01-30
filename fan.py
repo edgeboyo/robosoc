@@ -12,7 +12,8 @@ time.sleep(5)
 pi.set_servo_pulsewidth(FAN1, 1200)
 time.sleep(2)
 pi.set_servo_pulsewidth(FAN1, 1400)
-#time.sleep(2)
+#time.sleep(1)
+#pi.set_servo_pulsewidth(FAN1, 1200)
 #pi.set_servo_pulsewidth(FAN1, 1650)
 
 try:

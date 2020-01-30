@@ -53,14 +53,25 @@ if __name__ == "__main__":
         pi.set_servo_pulsewidth(ESC1, 1500)
         pi.set_servo_pulsewidth(ESC2, 1500)
         while True:
-            dist = distance("front")
-            print(dist)
-            if dist <= 150:
+            distf = distance("front")
+            distr = distance("right")
+            distl = distance("left")
+            print(distl, distf, distr)
+            if distf <= 100:
                 pi.set_servo_pulsewidth(ESC1, 2000)
                 pi.set_servo_pulsewidth(ESC2, 2000)
+            elif (distf >= 100) & (distl <= 100):
+                pi.set_servo_pulsewidth(ESC1, 1400)
+                pi.set_servo_pulsewidth(ESC2, 1600)
+                time.sleep(1)
+            elif (distf >= 100) & (distr <= 100):
+                pi.set_servo_pulsewidth(ESC1, 1600)
+                pi.set_servo_pulsewidth(ESC2, 1400)
+                time.sleep(1)
             else:
-                pi.set_servo_pulsewidth(ESC1, 1500)
-                pi.set_servo_pulsewidth(ESC2, 1500)
+                pi.set_servo_pulsewidth(ESC1, 1600)
+                pi.set_servo_pulsewidth(ESC2, 1400)
+                time.sleep(2)
             time.sleep(0.5)
     except KeyboardInterrupt:
         GPIO.cleanup()
