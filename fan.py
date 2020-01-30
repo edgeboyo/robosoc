@@ -9,7 +9,7 @@ FAN1 = 12 #Connect fan to this
 pi = pigpio.pi()
 pi.set_servo_pulsewidth(FAN1, 1000)
 time.sleep(5)
-pi.set_servo_pulsewidth(FAN1, 1600)
+pi.set_servo_pulsewidth(FAN1, 1200)
 
 try:
     while True:
