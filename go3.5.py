@@ -63,25 +63,25 @@ if __name__ == "__main__":
         norm()
         print("Calibration  complete time to run!")
         input("Enter key to start battle...")
+        print(distl, distf, distr)
         while True:
             distf = distance("front")
             distr = distance("right")
             distl = distance("left")
-            print(distl, distf, distr)
-            if (distl <= 15) & (distf <= 15) & (distr <= 15):
+            if (distl <= 20) & (distf <= 20) & (distr <= 20):
                 pi.set_servo_pulsewidth(ESC1, 2000)
                 pi.set_servo_pulsewidth(ESC2, 2000)
                 turbo()
                 time.sleep(0.01)
-            elif distf <= 150:
+            elif distf <= 120:
                 pi.set_servo_pulsewidth(ESC1, 1600)
                 pi.set_servo_pulsewidth(ESC2, 1600)
                 time.sleep(0.01)
-            elif (distf >= 150) & (distl <= 150):
+            elif (distf >= 120) & (distl <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1460)
                 pi.set_servo_pulsewidth(ESC2, 1550)
                 time.sleep(0.01)
-            elif (distf >= 150) & (distr <= 150):
+            elif (distf >= 120) & (distr <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1540)
                 pi.set_servo_pulsewidth(ESC2, 1460)
                 time.sleep(0.01)
@@ -89,7 +89,7 @@ if __name__ == "__main__":
                 pi.set_servo_pulsewidth(ESC1, 1460)
                 pi.set_servo_pulsewidth(ESC2, 1550)
                 time.sleep(0.01)
-            time.sleep(0.001)
+            time.sleep(0.0001)
     except KeyboardInterrupt:
         GPIO.cleanup()
         os.system("sudo killall pigpiod")
