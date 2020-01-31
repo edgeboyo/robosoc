@@ -79,25 +79,33 @@ if __name__ == "__main__":
                 turbo()
                 state = "FAST AF!"
 #                time.sleep(0.01)
-            elif staf or (staf and star and stal) or (staf and not star and not stal) or (not staf and stal and star):
+            elif (star and stal) or (staf and not star and not stal):
                 #elif (staf and star and stal) or (staf and not star and not stal):
                 pi.set_servo_pulsewidth(ESC1, 1600)
                 pi.set_servo_pulsewidth(ESC2, 1600)
                 state = "Forward" 
 #                time.sleep(0.01)
-            elif (staf and not star and stal) or (not staf and not star and stal):
-                pi.set_servo_pulsewidth(ESC1, 1500)
-                pi.set_servo_pulsewidth(ESC2, 1560)
-                state = "Left"
-#                time.sleep(0.01)
-            elif (staf and star and not stal) or (not staf and star and not stal):
+            elif (staf and star):
                 pi.set_servo_pulsewidth(ESC1, 1550)
+                pi.set_servo_pulsewidth(ESC1, 1620)
+                state = "Slight Left"
+            elif (staf and stal):
+                pi.set_servo_pulsewidth(ESC1, 1640)
+                pi.set_servo_pulsewidth(ESC1, 1540)
+                state = "Slight Right"
+            elif (stal):
+                pi.set_servo_pulsewidth(ESC1, 1500)
+                pi.set_servo_pulsewidth(ESC2, 1620)
+                state = "Big Left"
+#                time.sleep(0.01)
+            elif (star):
+                pi.set_servo_pulsewidth(ESC1, 1640)
                 pi.set_servo_pulsewidth(ESC2, 1500)
-                state = "Right"
+                state = "Big Right"
 #                time.sleep(0.01)
             else:
-                pi.set_servo_pulsewidth(ESC1, 1420)
-                pi.set_servo_pulsewidth(ESC2, 1600)
+                pi.set_servo_pulsewidth(ESC1, 1410)
+                pi.set_servo_pulsewidth(ESC2, 1650)
                 state = "Blind"
 #                time.sleep(0.01)
             time.sleep(0.002)

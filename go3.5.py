@@ -67,8 +67,8 @@ if __name__ == "__main__":
         while True:
             distf = distance("front")
             distr = distance("right")
-            distl = distance("left")
-            print(distl, distf, distr)
+            distl = 2000 #distance("left")
+#            print(distl, distf, distr)
             if (distl <= 20) & (distf <= 20) & (distr <= 20):
                 pi.set_servo_pulsewidth(ESC1, 2000)
                 pi.set_servo_pulsewidth(ESC2, 2000)
@@ -77,6 +77,7 @@ if __name__ == "__main__":
             elif distf <= 120:
                 pi.set_servo_pulsewidth(ESC1, 1600)
                 pi.set_servo_pulsewidth(ESC2, 1600)
+                print("I am slow speed!!")
 #                time.sleep(0.01)
             elif (distf >= 120) & (distl <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1550)
@@ -88,7 +89,8 @@ if __name__ == "__main__":
 #                time.sleep(0.01)
             else:
                 pi.set_servo_pulsewidth(ESC1, 1550)
-                pi.set_servo_pulsewidth(ESC2, 1600)
+                pi.set_servo_pulsewidth(ESC2, 1460)
+                print("I am fucking blind!!")
 #                time.sleep(0.01)
 #            time.sleep(0.0001)
     except KeyboardInterrupt:
