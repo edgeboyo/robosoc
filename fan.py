@@ -6,8 +6,9 @@ import pigpio
 
 FAN1 = 12 #Connect fan to this
 
+pi = pigpio.pi()
+
 def runFan():
-    pi = pigpio.pi()
     pi.set_servo_pulsewidth(FAN1, 1000)
     #time.sleep(5)
     #pi.set_servo_pulsewidth(FAN1, 1200)
@@ -17,6 +18,12 @@ def runFan():
 #time.sleep(1)
 #pi.set_servo_pulsewidth(FAN1, 1200)
 #pi.set_servo_pulsewidth(FAN1, 1650)
+
+def norm():
+    pi.set_servo_pulsewidth(FAN1, 1150)
+    
+def turbo():
+    pi.set_servo_pulsewidth(FAN1, 1600)
 
 if __name__ == "__main__":
     runFan()
