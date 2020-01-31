@@ -68,29 +68,40 @@ if __name__ == "__main__":
             distf = distance("front")
             distr = distance("right")
             distl = distance("left")
-            print(distl, distf, distr)
-            if (distl <= 20) & (distf <= 20) & (distr <= 20):
+            #print(distl + " " + distf + " " + distr)
+            staf = True if distf <= 120 else False
+            stal = True if distl <= 120 else False
+            star = True if distr <= 120 else False
+            state = ""
+            if (distf <= 20) and (distr <= 20) and (distl <= 20):
                 pi.set_servo_pulsewidth(ESC1, 2000)
                 pi.set_servo_pulsewidth(ESC2, 2000)
                 turbo()
+                state = "FAST AF!"
 #                time.sleep(0.01)
-            elif distf <= 120:
+            elif staf or (staf and star and stal) or (staf and not star and not stal) or (not staf and stal and star):
+                #elif (staf and star and stal) or (staf and not star and not stal):
                 pi.set_servo_pulsewidth(ESC1, 1600)
                 pi.set_servo_pulsewidth(ESC2, 1600)
+                state = "Forward" 
 #                time.sleep(0.01)
-            elif (distf >= 120) & (distl <= 120):
+            elif (staf and not star and stal) or (not staf and not star and stal):
+                pi.set_servo_pulsewidth(ESC1, 1500)
+                pi.set_servo_pulsewidth(ESC2, 1560)
+                state = "Left"
+#                time.sleep(0.01)
+            elif (staf and star and not stal) or (not staf and star and not stal):
                 pi.set_servo_pulsewidth(ESC1, 1550)
-                pi.set_servo_pulsewidth(ESC2, 1600)
-#                time.sleep(0.01)
-            elif (distf >= 120) & (distr <= 120):
-                pi.set_servo_pulsewidth(ESC1, 1600)
-                pi.set_servo_pulsewidth(ESC2, 1550)
+                pi.set_servo_pulsewidth(ESC2, 1500)
+                state = "Right"
 #                time.sleep(0.01)
             else:
-                pi.set_servo_pulsewidth(ESC1, 1550)
+                pi.set_servo_pulsewidth(ESC1, 1420)
                 pi.set_servo_pulsewidth(ESC2, 1600)
+                state = "Blind"
 #                time.sleep(0.01)
-#            time.sleep(0.0001)
+            time.sleep(0.002)
+            print ("{} {} {} {}".format(state, stal, staf, star))
     except KeyboardInterrupt:
         GPIO.cleanup()
         os.system("sudo killall pigpiod")

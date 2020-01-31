@@ -42,6 +42,7 @@ dwrapper = DistanceWrapper()
 def distance(pin):
     global dwrapper
     while True:
+        print(pin)
         GPIO.output(sonic_sensors[pin][0], True)
         time.sleep(0.00001)  # was 0.00001 now it's 100Hz to save cpu usage.
         GPIO.output(sonic_sensors[pin][0], False)
@@ -54,6 +55,7 @@ def distance(pin):
         while GPIO.input(sonic_sensors[pin][1]) == 1:
             StopTime = time.time()
     
+        print(pin + " distance found")
         dwrapper.distances[dwrapper.keys[pin]] = (StopTime - StartTime) * 34300 / 2
         time.sleep(0.001)
 
@@ -90,7 +92,7 @@ if __name__ == "__main__":
             print(distl, distf, distr)
             positions = [1, 2, 3]
 
-            if (distf <= 110) or (distr <= 110) or (distl <= 110):
+            if (distf <= 120) or (distr <= 120) or (distl <= 120):
                 pos = [distf, distl, distr]
                 last_known_pos = positions[pos.index(min(pos))]
 
@@ -98,13 +100,13 @@ if __name__ == "__main__":
                 pi.set_servo_pulsewidth(ESC1, 2000)
                 pi.set_servo_pulsewidth(ESC2, 2000)
                 turbo()
-            elif distf <= 110:
+            elif distf <= 120:
                 pi.set_servo_pulsewidth(ESC1, 1600)
                 pi.set_servo_pulsewidth(ESC2, 1600)
-            elif (distf >= 110) & (distl <= 110):
+            elif (distf >= 120) & (distl <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1460)
                 pi.set_servo_pulsewidth(ESC2, 1550)
-            elif (distf >= 110) & (distr <= 110):
+            elif (distf >= 120) & (distr <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1540)
                 pi.set_servo_pulsewidth(ESC2, 1460)
             else:

@@ -105,9 +105,9 @@ class Bobot():
 
     def change_state(self, f, l, r):
         # no clue what happens if theres nothing on the queue, probably just None
-        fdist = f.pop()
-        ldist = l.pop()
-        rdist = r.pop()
+        fdist = f.get()
+        ldist = l.get()
+        rdist = r.get()
 
         positions = [1, 2, 3]
 

@@ -20,7 +20,7 @@ def runFan():
 #pi.set_servo_pulsewidth(FAN1, 1650)
 
 def norm():
-    pi.set_servo_pulsewidth(FAN1, 1150)
+    pi.set_servo_pulsewidth(FAN1, 1050)
     
 def turbo():
     pi.set_servo_pulsewidth(FAN1, 1600)
