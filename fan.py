@@ -23,7 +23,10 @@ def norm():
     pi.set_servo_pulsewidth(FAN1, 1050)
     
 def turbo():
-    pi.set_servo_pulsewidth(FAN1, 1600)
+    pi.set_servo_pulsewidth(FAN1, 1700)
+
+def stop():
+    pi.set_servo_pulsewidth(FAN1, 1000)
 
 if __name__ == "__main__":
     runFan()

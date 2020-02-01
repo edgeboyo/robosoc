@@ -6,7 +6,7 @@ time.sleep(1) # do not remove apparently
 import pigpio
 
 GPIO.setmode(GPIO.BCM)
-sonic_sensors = {"front": (2, 3), "left": (4, 17), "right": (27, 22)}
+sonic_sensors = {"left": (4, 17), "right": (27, 22)}
 
 ESC1=18  #Connect the ESC in this GPIO pin 
 ESC2=24  #Connect the ESC of second motor to this GPIO pin
@@ -64,35 +64,42 @@ if __name__ == "__main__":
         print("Calibration  complete time to run!")
         input("Enter key to start battle...")
         #print(distl, distf, distr)
+        last = 'f'
         while True:
-            distf = distance("front")
+            #distf = distance("front")
             distr = distance("right")
             distl = distance("left")
-            print(distl, distf, distr)
-            if (distl <= 20) & (distf <= 20) & (distr <= 20):
+            print(distl, distr)
+
+            if (distl <= 40) and (distr <= 40):
                 pi.set_servo_pulsewidth(ESC1, 2000)
                 pi.set_servo_pulsewidth(ESC2, 2000)
                 turbo()
-#                time.sleep(0.01)
-            elif distf <= 120:
+            elif (distl <= 120) and (distr <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1600)
                 pi.set_servo_pulsewidth(ESC2, 1600)
-                print("I am slow speed!!")
-#                time.sleep(0.01)
-            elif (distf >= 120) & (distl <= 120):
+                last = 'f'
+            elif (distl <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1550)
                 pi.set_servo_pulsewidth(ESC2, 1600)
-#                time.sleep(0.01)
-            elif (distf >= 120) & (distr <= 120):
+                last = 'l'
+            elif (distr <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1600)
                 pi.set_servo_pulsewidth(ESC2, 1550)
-#                time.sleep(0.01)
+                last = 'r'
             else:
-                pi.set_servo_pulsewidth(ESC1, 1550)
-                pi.set_servo_pulsewidth(ESC2, 1460)
-                print("I am fucking blind!!")
-#                time.sleep(0.01)
-#            time.sleep(0.0001)
+                if (last == 'f'):
+                    pi.set_servo_pulsewidth(ESC1, 1600)
+                    pi.set_servo_pulsewidth(ESC2, 1600)   
+                elif (last == 'l'):
+                    pi.set_servo_pulsewidth(ESC1, 1550)
+                    pi.set_servo_pulsewidth(ESC2, 1600)
+                elif (last == 'r'):
+                    pi.set_servo_pulsewidth(ESC1, 1600)
+                    pi.set_servo_pulsewidth(ESC2, 1550)
+                
+
+            time.sleep(0.0001)
     except KeyboardInterrupt:
         GPIO.cleanup()
         os.system("sudo killall pigpiod")

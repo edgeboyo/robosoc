@@ -71,13 +71,14 @@ if __name__ == "__main__":
             distl = distance("left")
             print(distl, distr)
 
-            if (distl <= 20) and (distr <= 20):
+            if (distl <= 25) and (distr <= 25):
                 pi.set_servo_pulsewidth(ESC1, 2000)
                 pi.set_servo_pulsewidth(ESC2, 2000)
                 turbo()
+                last = '5'
             elif (distl <= 120) and (distr <= 120):
-                pi.set_servo_pulsewidth(ESC1, 1600)
-                pi.set_servo_pulsewidth(ESC2, 1600)
+                pi.set_servo_pulsewidth(ESC1, 1650)
+                pi.set_servo_pulsewidth(ESC2, 1650)
                 last = 'f'
             elif (distl <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1550)
@@ -88,7 +89,10 @@ if __name__ == "__main__":
                 pi.set_servo_pulsewidth(ESC2, 1550)
                 last = 'r'
             else:
-                if (last == 'f'):
+                if (last == 't'):
+                    pi.set_servo_pulsewidth(ESC1, 1650)
+                    pi.setw_servo_pulsewidth(ESC2, 1350) 
+                elif (last == 'f'):
                     pi.set_servo_pulsewidth(ESC1, 1600)
                     pi.set_servo_pulsewidth(ESC2, 1600)   
                 elif (last == 'l'):
