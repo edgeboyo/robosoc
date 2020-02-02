@@ -23,10 +23,6 @@ print("Sonic sensors set up!")
 
 import fan
 
-from fan import runFan
-from fan import norm
-from fan import turbo
-
 max_value = 2000
 min_value = 1000
 
@@ -59,8 +55,8 @@ if __name__ == "__main__":
         pi.set_servo_pulsewidth(ESC1, 1500)
         pi.set_servo_pulsewidth(ESC2, 1500)
         print("Motors armed")
-        runFan()
-        norm()
+        fan.runFan()
+        fan.norm()
         print("Calibration  complete time to run!")
         input("Enter key to start battle...")
         #print(distl, distf, distr)
@@ -71,14 +67,14 @@ if __name__ == "__main__":
             distl = distance("left")
             print(distl, distr)
 
-            if (distl <= 25) and (distr <= 25):
+            if (distl <= 40) and (distr <= 40):
                 pi.set_servo_pulsewidth(ESC1, 2000)
                 pi.set_servo_pulsewidth(ESC2, 2000)
-                turbo()
-                last = '5'
+                fan.turbo()
+                last = 't'
             elif (distl <= 120) and (distr <= 120):
-                pi.set_servo_pulsewidth(ESC1, 1650)
-                pi.set_servo_pulsewidth(ESC2, 1650)
+                pi.set_servo_pulsewidth(ESC1, 1800)
+                pi.set_servo_pulsewidth(ESC2, 1800)
                 last = 'f'
             elif (distl <= 120):
                 pi.set_servo_pulsewidth(ESC1, 1550)
